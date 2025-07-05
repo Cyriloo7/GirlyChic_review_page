@@ -124,6 +124,31 @@
         background: #333;
       }
 
+      /* Share button styling */
+      .share-btn {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        background: #25d366;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        z-index: 10;
+        transition: transform 0.2s ease;
+      }
+
+      .share-btn:hover {
+        transform: translateY(-3px);
+      }
+
       footer {
         margin-top: 2.5rem;
         font-size: 0.9rem;
@@ -191,6 +216,22 @@
       </div>
     </div>
 
+    <!-- Share Button -->
+    <button class="share-btn" id="whatsappShare">📲</button>
+
     <footer>© 2025 Girly Chic Designer Boutique</footer>
+
+    <script>
+      document
+        .getElementById("whatsappShare")
+        .addEventListener("click", function () {
+          var pageUrl = encodeURIComponent(window.location.href);
+          var shareText = encodeURIComponent(
+            "Check out Girly Chic Designer Boutique: "
+          );
+          var whatsappUrl = "https://wa.me/?text=" + shareText + pageUrl;
+          window.open(whatsappUrl, "_blank");
+        });
+    </script>
   </body>
 </html>
