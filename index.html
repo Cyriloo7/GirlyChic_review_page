@@ -196,51 +196,47 @@
       style="display: none"
     />
 
+    <!-- in your <script> block -->
     <script>
       (function () {
-        // Build a shareable WhatsApp link
-        function openWhatsAppLink() {
-          const text = encodeURIComponent(
-            "Check out Girly Chic Designer Boutique!\n" +
-              location.href +
-              "\n" +
-              location.origin +
-              "/images/review_qrcode.png"
-          );
-          window.open(`https://wa.me/?text=${text}`, "_blank");
-        }
-
         async function shareReview() {
-          // If running over file:// or on localhost or insecure HTTP, skip Web Share API
-          if (
-            location.protocol === "file:" ||
-            (location.protocol === "http:" && location.hostname !== "localhost")
-          ) {
-            return openWhatsAppLink();
-          }
-
           try {
+            // Fetch the QR-code image as a blob
             const resp = await fetch("/images/review_qrcode.png");
+            if (!resp.ok) throw new Error("Image fetch failed");
             const blob = await resp.blob();
+            // Wrap it in a File so Web Share API knows its name & type
             const file = new File([blob], "review_qrcode.png", {
               type: blob.type,
             });
 
             const shareData = {
               title: "Girly Chic Designer Boutique",
-              text: "Check out Girly Chic Designer Boutique!",
-              url: window.location.href,
+              text: "Check out Girly Chic Designer Boutique — scan this QR code!",
               files: [file],
             };
 
-            if (navigator.canShare && navigator.canShare(shareData)) {
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              // This will pop up the native share sheet, including WhatsApp if installed
               await navigator.share(shareData);
             } else {
-              openWhatsAppLink();
+              // Fallback to link‑only WhatsApp share
+              const text = encodeURIComponent(
+                "Check out Girly Chic Designer Boutique!\n" +
+                  window.location.origin +
+                  "/images/review_qrcode.png"
+              );
+              window.open(`https://wa.me/?text=${text}`, "_blank");
             }
           } catch (err) {
             console.error("Share failed:", err);
-            openWhatsAppLink();
+            // Fallback to link‑only WhatsApp share
+            const text = encodeURIComponent(
+              "Check out Girly Chic Designer Boutique!\n" +
+                window.location.origin +
+                "/images/review_qrcode.png"
+            );
+            window.open(`https://wa.me/?text=${text}`, "_blank");
           }
         }
 
