@@ -12,7 +12,6 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
         font-family: "Montserrat", sans-serif;
         text-align: center;
@@ -21,8 +20,6 @@
         color: #fff;
         overflow-x: hidden;
       }
-
-      /* Blurred background image */
       body::before {
         content: "";
         position: fixed;
@@ -35,8 +32,6 @@
         filter: blur(14px);
         z-index: -2;
       }
-
-      /* Dark transparent overlay */
       body::after {
         content: "";
         position: fixed;
@@ -47,7 +42,6 @@
         background: rgba(0, 0, 0, 0.6);
         z-index: -1;
       }
-
       .container {
         max-width: 400px;
         margin: 0 auto;
@@ -58,30 +52,25 @@
         backdrop-filter: blur(8px);
         animation: fadeIn 1s ease;
       }
-
       .logo {
         width: 120px;
         margin-bottom: 1rem;
       }
-
       h1 {
         font-size: 2.1rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
       }
-
       p {
         font-size: 1rem;
         color: #ddd;
         margin-bottom: 1.8rem;
       }
-
       .btn-container {
         display: flex;
         flex-direction: column;
         gap: 1rem;
       }
-
       .btn-container a {
         display: flex;
         align-items: center;
@@ -95,16 +84,13 @@
         transition: all 0.2s ease;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
       }
-
       .btn-container a:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
       }
-
       .google {
         background: #4285f4;
       }
-
       .instagram {
         background: linear-gradient(
           45deg,
@@ -115,16 +101,12 @@
           #bc1888 100%
         );
       }
-
       .facebook {
         background: #4267b2;
       }
-
       .website {
         background: #333;
       }
-
-      /* Share button styling */
       .share-btn {
         position: fixed;
         bottom: 1rem;
@@ -144,17 +126,14 @@
         z-index: 10;
         transition: transform 0.2s ease;
       }
-
       .share-btn:hover {
         transform: translateY(-3px);
       }
-
       footer {
         margin-top: 2.5rem;
         font-size: 0.9rem;
         color: #bbb;
       }
-
       @keyframes fadeIn {
         0% {
           opacity: 0;
@@ -165,7 +144,6 @@
           transform: translateY(0);
         }
       }
-
       @media (max-width: 480px) {
         h1 {
           font-size: 1.7rem;
@@ -177,59 +155,71 @@
       }
     </style>
   </head>
-
   <body>
     <div class="container">
       <img src="images/logo.png" alt="Girly Chic Logo" class="logo" />
       <h1>Welcome to Girly Chic!</h1>
-      <p>We'd love to stay connected with you — choose an option below:</p>
-
+      <p>We'd love to stay connected with you</p>
+      <p></p>
+      <p>Follow us on social media and leave a review!</p>
       <div class="btn-container">
         <a
           class="google"
           href="https://maps.app.goo.gl/dQUkRuPZhkP3696q7"
           target="_blank"
+          >⭐ Review us on Google</a
         >
-          ⭐ Review us on Google
-        </a>
         <a
           class="instagram"
           href="https://www.instagram.com/girly_chic_designer_boutique/"
           target="_blank"
+          >📸 Visit our Instagram</a
         >
-          📸 Visit our Instagram
-        </a>
         <a
           class="facebook"
           href="https://www.facebook.com/people/Girly-Chic-Designer-Boutique/61573012185405/"
           target="_blank"
+          >👍 Visit our Facebook</a
         >
-          👍 Visit our Facebook
-        </a>
-        <a
-          class="website"
-          href="https://girlychicboutique.com/"
-          target="_blank"
+        <a class="website" href="https://girlychicboutique.com/" target="_blank"
+          >🌐 Visit our Website</a
         >
-          🌐 Visit our Website
-        </a>
       </div>
     </div>
-
-    <!-- Share Button -->
     <button class="share-btn" id="whatsappShare">📲</button>
-
     <footer>© 2025 Girly Chic Designer Boutique</footer>
-
+    <img
+      src="/images/review_qrcode.png"
+      alt="Review QR Code"
+      style="display: none"
+    />
     <script>
       document
         .getElementById("whatsappShare")
         .addEventListener("click", function () {
-          var pageUrl = encodeURIComponent(window.location.href);
+          // 1) Your message
           var shareText = encodeURIComponent(
-            "Check out Girly Chic Designer Boutique: "
+            "Check out Girly Chic Designer Boutique!"
           );
-          var whatsappUrl = "https://wa.me/?text=" + shareText + pageUrl;
+
+          // 2) The page URL you want to share
+          var pageUrl = encodeURIComponent(window.location.href);
+
+          // 3) The absolute URL of the QR-code image on your server
+          //    (must be publicly reachable so WhatsApp can fetch the preview)
+          var qrImageUrl = encodeURIComponent(
+            window.location.origin + "images/review_qrcode.png"
+          );
+
+          // Combine them with line breaks (%0A)
+          var whatsappUrl =
+            "https://wa.me/?text=" +
+            shareText +
+            "%0A" +
+            pageUrl +
+            "%0A" +
+            qrImageUrl;
+
           window.open(whatsappUrl, "_blank");
         });
     </script>
