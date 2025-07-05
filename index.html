@@ -221,7 +221,6 @@
 
           try {
             const resp = await fetch("/images/review_qrcode.png");
-            print(resp);
             const blob = await resp.blob();
             const file = new File([blob], "review_qrcode.png", {
               type: blob.type,
