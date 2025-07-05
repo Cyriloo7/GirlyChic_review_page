@@ -185,42 +185,70 @@
         >
       </div>
     </div>
-    <button class="share-btn" id="whatsappShare">📲</button>
+    <button id="whatsappShare" class="share-btn" aria-label="Share on WhatsApp">
+      📲
+    </button>
     <footer>© 2025 Girly Chic Designer Boutique</footer>
     <img
       src="/images/review_qrcode.png"
+      loading="lazy"
       alt="Review QR Code"
       style="display: none"
     />
+
     <script>
-      document
-        .getElementById("whatsappShare")
-        .addEventListener("click", function () {
-          // 1) Your message
-          var shareText = encodeURIComponent(
-            "Check out Girly Chic Designer Boutique!"
+      (function () {
+        // Build a shareable WhatsApp link
+        function openWhatsAppLink() {
+          const text = encodeURIComponent(
+            "Check out Girly Chic Designer Boutique!\n" +
+              location.href +
+              "\n" +
+              location.origin +
+              "/images/review_qrcode.png"
           );
+          window.open(`https://wa.me/?text=${text}`, "_blank");
+        }
 
-          // 2) The page URL you want to share
-          var pageUrl = encodeURIComponent(window.location.href);
+        async function shareReview() {
+          // If running over file:// or on localhost or insecure HTTP, skip Web Share API
+          if (
+            location.protocol === "file:" ||
+            (location.protocol === "http:" && location.hostname !== "localhost")
+          ) {
+            return openWhatsAppLink();
+          }
 
-          // 3) The absolute URL of the QR-code image on your server
-          //    (must be publicly reachable so WhatsApp can fetch the preview)
-          var qrImageUrl = encodeURIComponent(
-            "https://github.com/Cyriloo7/GirlyChic_review_page/blob/5a07b2036fd1a2749bc998863fd7bd51817d8cfc/images/review_qrcode.png"
-          );
+          try {
+            const resp = await fetch("/images/review_qrcode.png");
+            print(resp);
+            const blob = await resp.blob();
+            const file = new File([blob], "review_qrcode.png", {
+              type: blob.type,
+            });
 
-          // Combine them with line breaks (%0A)
-          var whatsappUrl =
-            "https://wa.me/?text=" +
-            shareText +
-            "%0A" +
-            pageUrl +
-            "%0A" +
-            qrImageUrl;
+            const shareData = {
+              title: "Girly Chic Designer Boutique",
+              text: "Check out Girly Chic Designer Boutique!",
+              url: window.location.href,
+              files: [file],
+            };
 
-          window.open(whatsappUrl, "_blank");
-        });
+            if (navigator.canShare && navigator.canShare(shareData)) {
+              await navigator.share(shareData);
+            } else {
+              openWhatsAppLink();
+            }
+          } catch (err) {
+            console.error("Share failed:", err);
+            openWhatsAppLink();
+          }
+        }
+
+        document
+          .getElementById("whatsappShare")
+          .addEventListener("click", shareReview);
+      })();
     </script>
   </body>
 </html>
