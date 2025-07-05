@@ -206,7 +206,7 @@
             if (!resp.ok) throw new Error("Image fetch failed");
             const blob = await resp.blob();
             // Wrap it in a File so Web Share API knows its name & type
-            const file = new File([blob], "review_qrcode.png", {
+            const file = new File([blob], "/images/review_qrcode.png", {
               type: blob.type,
             });
 
