@@ -7,16 +7,22 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
-      body {
+      * {
         margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
         font-family: "Montserrat", sans-serif;
         text-align: center;
         padding: 3rem 1rem;
         position: relative;
         color: #fff;
+        overflow-x: hidden;
       }
 
-      /* Blurred Background Image */
+      /* Blurred background image */
       body::before {
         content: "";
         position: fixed;
@@ -26,7 +32,7 @@
         height: 100%;
         background: url("images/logo.png") no-repeat center center fixed;
         background-size: cover;
-        filter: blur(10px);
+        filter: blur(14px);
         z-index: -2;
       }
 
@@ -38,45 +44,61 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.6);
         z-index: -1;
       }
 
-      h1 {
-        font-size: 2.2rem;
-        font-weight: 600;
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        animation: fadeIn 1s ease;
+      }
+
+      .logo {
+        width: 120px;
         margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
       }
 
       p {
         font-size: 1rem;
         color: #ddd;
-        margin-bottom: 2rem;
+        margin-bottom: 1.8rem;
       }
 
       .btn-container {
         display: flex;
         flex-direction: column;
-        gap: 1.2rem;
-        max-width: 350px;
-        margin: 0 auto;
+        gap: 1rem;
       }
 
       .btn-container a {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 1rem;
         text-decoration: none;
         color: white;
         border-radius: 12px;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         font-weight: 600;
-        transition: transform 0.2s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
       }
 
       .btn-container a:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 14px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
       }
 
       .google {
@@ -103,16 +125,26 @@
       }
 
       footer {
-        margin-top: 3rem;
+        margin-top: 2.5rem;
         font-size: 0.9rem;
         color: #bbb;
       }
 
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       @media (max-width: 480px) {
         h1 {
-          font-size: 1.8rem;
+          font-size: 1.7rem;
         }
-
         .btn-container a {
           font-size: 1rem;
           padding: 0.9rem;
@@ -122,34 +154,41 @@
   </head>
 
   <body>
-    <h1>Welcome to Girly Chic!</h1>
-    <p>We'd love to stay connected with you — choose an option below:</p>
+    <div class="container">
+      <img src="images/logo.png" alt="Girly Chic Logo" class="logo" />
+      <h1>Welcome to Girly Chic!</h1>
+      <p>We'd love to stay connected with you — choose an option below:</p>
 
-    <div class="btn-container">
-      <a
-        class="google"
-        href="https://maps.app.goo.gl/dQUkRuPZhkP3696q7"
-        target="_blank"
-      >
-        ⭐ Review us on Google
-      </a>
-      <a
-        class="instagram"
-        href="https://www.instagram.com/girly_chic_designer_boutique/"
-        target="_blank"
-      >
-        📸 Visit our Instagram
-      </a>
-      <a
-        class="facebook"
-        href="https://www.facebook.com/people/Girly-Chic-Designer-Boutique/61573012185405/"
-        target="_blank"
-      >
-        👍 Visit our Facebook
-      </a>
-      <a class="website" href="https://girlychicboutique.com/" target="_blank">
-        🌐 Visit our Website
-      </a>
+      <div class="btn-container">
+        <a
+          class="google"
+          href="https://maps.app.goo.gl/dQUkRuPZhkP3696q7"
+          target="_blank"
+        >
+          ⭐ Review us on Google
+        </a>
+        <a
+          class="instagram"
+          href="https://www.instagram.com/girly_chic_designer_boutique/"
+          target="_blank"
+        >
+          📸 Visit our Instagram
+        </a>
+        <a
+          class="facebook"
+          href="https://www.facebook.com/people/Girly-Chic-Designer-Boutique/61573012185405/"
+          target="_blank"
+        >
+          👍 Visit our Facebook
+        </a>
+        <a
+          class="website"
+          href="https://girlychicboutique.com/"
+          target="_blank"
+        >
+          🌐 Visit our Website
+        </a>
+      </div>
     </div>
 
     <footer>© 2025 Girly Chic Designer Boutique</footer>
