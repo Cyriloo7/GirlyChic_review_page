@@ -44,13 +44,19 @@
         z-index: -1;
       }
       .container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 2rem 1.5rem;
-        border-radius: 20px;
+        /* fallback for older browsers that don’t understand backdrop-filter at all */
         background: rgba(255, 255, 255, 0.08);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        max-width: 400px;
+        margin: 0 auto;
+
+        /* Safari 9+ */
+        -webkit-backdrop-filter: blur(8px);
+        /* All other modern browsers */
         backdrop-filter: blur(8px);
+
         animation: fadeIn 1s ease;
       }
       .logo {
@@ -189,7 +195,7 @@
         >
       </div>
     </div>
-    <button class="share-btn" id="whatsappShare">
+    <button class="share-btn" id="whatsappShare" title="Share via WhatsApp">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
